@@ -30,7 +30,7 @@ mlops-traffic/
 
 ```bash
 # Cloner le projet
-git clone https://github.com/<TON_UTILISATEUR>/mlops-traffic-prediction.git
+git clone https://github.com/HiAyoub/mlops-traffic-prediction.git
 cd mlops-traffic-prediction
 
 # Installer les dépendances

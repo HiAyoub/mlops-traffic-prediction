@@ -1,0 +1,6 @@
+README.md
+setup.py
+src/projet_estimation_traffic.egg-info/PKG-INFO
+src/projet_estimation_traffic.egg-info/SOURCES.txt
+src/projet_estimation_traffic.egg-info/dependency_links.txt
+src/projet_estimation_traffic.egg-info/top_level.txt
