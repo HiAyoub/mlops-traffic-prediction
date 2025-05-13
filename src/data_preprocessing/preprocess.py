@@ -232,7 +232,7 @@ class Preprocessing:
             X_columns = ['Id','AvgTt','MedTt','ratio','AvgSp','HvgSp','MedSp','SdSp','Hits',
                          'P5sp','P10sp','P15sp','P20sp','P25sp','P30sp','P35sp','P40sp','P45sp',
                          'P50sp','P55sp','P60sp','P65sp','P70sp','P75sp','P80sp','P85sp','P90sp',
-                         'P95sp','heure','capteur','zone']
+                         'P95sp','heure']
 
             self.X = self.df[X_columns]  # Sélectionner X à partir des colonnes définies
 
@@ -451,7 +451,7 @@ class Preprocessing:
         """
         logging.info("Traitement des colonnes catégorielles et numériques.")
         cat_columns = X_train.select_dtypes(include=['object']).columns.tolist()
-        num_columns = X_train.select_dtypes(include(['int64', 'float64'])).columns.tolist()
+        num_columns = X_train.select_dtypes(include=['int64', 'float64']).columns.tolist()
 
         X_train, X_test = self.encode_categorical(X_train, X_test, cat_columns)
         X_train, X_test = self.scale_features(X_train, X_test, num_columns)

@@ -7,17 +7,20 @@ from sklearn.preprocessing import StandardScaler
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Engeneering:
-    def __init__(self, chemin: str=None, df_input:pd.DataFrame= None, delimiteur: str = ','):
+    def __init__(self, chemin: str = None, df_input: pd.DataFrame = None, delimiteur: str = ','):
         """
         Initialise la classe Engeneering.
 
         Args:
             chemin (str): Chemin vers le fichier CSV.
+            df_input (pd.DataFrame, optional): DataFrame à utiliser directement.
             delimiteur (str, optional): Délimiteur utilisé dans le fichier CSV. Par défaut ','.
         """
-        if chemin and not df_input:
+        self.df = None  # Initialisation par défaut
+        print("n")
+        if chemin is not None and not isinstance(df_input, pd.DataFrame):
             try:
-                logging.info("Initialisation de la classe Engeneering.")
+                logging.info("Initialisation de la classe Engeneering avec un fichier CSV.")
                 if not isinstance(chemin, str) or not chemin.endswith('.csv'):
                     raise ValueError("Le chemin doit être une chaîne de caractères pointant vers un fichier CSV.")
                 self.df = pd.read_csv(chemin, delimiter=delimiteur)
@@ -31,18 +34,18 @@ class Engeneering:
             except Exception as e:
                 logging.error(f"Erreur lors du chargement du fichier: {e}")
                 raise
-        elif not chemin and df_input:
+        elif chemin is None and isinstance(df_input, pd.DataFrame):
             try:
-                logging.info("Initialisation de la classe Engeneering.")
-                if not isinstance(df_input, pd.DataFrame):
-                    raise ValueError("L'entrée n'est pas un dataframe pandas valide'.")
+                logging.info("Initialisation de la classe Engeneering avec un DataFrame.")
+                if df_input.empty:
+                    raise ValueError("Le DataFrame fourni est vide.")
                 self.df = df_input
                 logging.info(f"Dataset chargé avec succès. Dimensions: {self.df.shape}")
             except Exception as e:
-                logging.error(f"Erreur lors du chargement de la dataset: {e}")
-                raise 
+                logging.error(f"Erreur lors du chargement du DataFrame: {e}")
+                raise
         else:
-            logging.error(f"Erreur dans les parametres")
+            raise ValueError("Les paramètres fournis sont invalides. Fournissez soit un chemin vers un fichier CSV, soit un DataFrame valide.")
 
 
 
@@ -92,7 +95,9 @@ class Engeneering:
         self.df['ratio_hits_avgtt'] = self.df['Hits'] / self.df['AvgTt']
         logging.info("Ratios créés avec succès.")
 
-
+    def get_df(self):
+        return self.df
+    
     def save_to_csv(self, output_path: str) -> None:
         """
         Sauvegarde le DataFrame transformé dans un fichier CSV.
